@@ -1,0 +1,40 @@
+
+wget 'https://sourceforge.net/projects/raspberry-gpio-python/files/raspbian-jessie/rpi.gpio_0.6.3%7Ejessie.orig.tar.gz/download'
+
+tar zxvf RPi.GPIO-0.5.4.tar.gz
+
+cd RPi.GPIO-0.5.4/
+
+
+sudo apt-get install python-dev
+
+sudo python setup.py install
+ 
+
+sudo nano blink.py
+
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT) ## GPIO 17 como salida
+GPIO.setup(27, GPIO.OUT) ## GPIO 27 como salida
+
+def blink():
+        print "Ejecucion iniciada..."
+        iteracion = 0
+        while iteracion < 30: ## Segundos que durara la funcion
+                GPIO.output(17, True) ## Enciendo el 17
+                GPIO.output(27, False) ## Apago el 27
+                time.sleep(1) ## Esperamos 1 segundo
+                GPIO.output(17, False) ## Apago el 17
+                GPIO.output(27, True) ## Enciendo el 27
+                time.sleep(1) ## Esperamos 1 segundo
+                iteracion = iteracion + 2 ## Sumo 2 porque he hecho dos parpadeos
+        print "Ejecucion finalizada"
+        GPIO.cleanup() ## Hago una limpieza de los GPIO
+
+blink() ## Hago la llamada a la funcion blink
+
+
+sudo python blink.py
